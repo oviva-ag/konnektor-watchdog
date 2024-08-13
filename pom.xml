@@ -31,9 +31,9 @@
     <maven.compiler.release>${maven.compiler.source}</maven.compiler.release>
 
     <version.jboss-logging>3.6.0.Final</version.jboss-logging>
-    <version.slf4j>2.0.13</version.slf4j>
+    <version.slf4j>2.0.16</version.slf4j>
 
-    <version.micrometer>1.13.2</version.micrometer>
+    <version.micrometer>1.13.3</version.micrometer>
 
     <version.logback.classic>1.5.6</version.logback.classic>
 
@@ -85,7 +85,7 @@
       <dependency>
         <groupId>io.opentelemetry</groupId>
         <artifactId>opentelemetry-bom</artifactId>
-        <version>1.40.0</version>
+        <version>1.41.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -111,6 +111,16 @@
         <artifactId>logback-classic</artifactId>
         <version>${version.logback.classic}</version>
       </dependency>
+      <dependency>
+        <groupId>com.oviva.epa</groupId>
+        <artifactId>diga-epa-client</artifactId>
+        <version>1.0.0-rc.0</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.auto.service</groupId>
+        <artifactId>auto-service</artifactId>
+        <version>1.1.1</version>
+      </dependency>
 
       <!-- BEGIN resolve dependency convergence for transient dependencies -->
       <dependency>
@@ -135,81 +145,13 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>org.hamcrest</groupId>
-        <artifactId>hamcrest</artifactId>
-        <version>2.2</version>
-      </dependency>
-      <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-bom</artifactId>
         <version>5.12.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <dependency>
-        <groupId>org.testcontainers</groupId>
-        <artifactId>testcontainers-bom</artifactId>
-        <version>1.20.1</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>io.rest-assured</groupId>
-        <artifactId>rest-assured</artifactId>
-        <version>5.5.0</version>
-      </dependency>
 
-      <!-- BEGIN wiremock // fix for broken dependency convergence & vulnerabilities -->
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-lang3</artifactId>
-        <version>3.15.0</version>
-      </dependency>
-      <dependency>
-        <groupId>com.github.jknack</groupId>
-        <artifactId>handlebars</artifactId>
-        <version>${version.handlebars}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.github.jknack</groupId>
-        <artifactId>handlebars-helpers</artifactId>
-        <version>${version.handlebars}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.jayway.jsonpath</groupId>
-        <artifactId>json-path</artifactId>
-        <version>2.9.0</version>
-        <exclusions>
-          <exclusion>
-            <groupId>org.ow2.asm</groupId>
-            <artifactId>asm</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.wiremock</groupId>
-        <artifactId>wiremock</artifactId>
-        <version>3.9.1</version>
-        <exclusions>
-          <exclusion>
-            <groupId>com.github.jknack</groupId>
-            <artifactId>*</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <!-- END wiremock -->
     </dependencies>
   </dependencyManagement>
 
@@ -237,12 +179,10 @@
     <dependency>
       <groupId>com.oviva.epa</groupId>
       <artifactId>diga-epa-client</artifactId>
-      <version>1.0.0-rc.0</version>
     </dependency>
     <dependency>
       <groupId>com.google.auto.service</groupId>
       <artifactId>auto-service</artifactId>
-      <version>1.0-rc5</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -351,6 +291,28 @@
       </plugins>
     </pluginManagement>
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>2.17.1</version>
+        <configuration>
+          <generateBackupPoms>false</generateBackupPoms>
+          <ignoredVersions>.*-M.*,.*-alpha.*,.*-beta.*,.*-RC.*,.*-redhat.*</ignoredVersions>
+          <ruleSet>
+            <rules>
+              <rule>
+                <groupId>jakarta.*</groupId>
+                <ignoreVersions>
+                  <ignoreVersion>
+                    <type>regex</type>
+                    <version>.*</version>
+                  </ignoreVersion>
+                </ignoreVersions>
+              </rule>
+            </rules>
+          </ruleSet>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
