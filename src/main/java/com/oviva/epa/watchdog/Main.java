@@ -44,6 +44,8 @@ public class Main implements AutoCloseable {
     logger.atDebug().log("initialising application");
     try (var app = new Main(new EnvConfigProvider("EPA_FM_WATCHDOG", System::getenv))) {
       app.run();
+    } catch (Exception e) {
+      logger.atError().setCause(e).log("application crashed, cause: {}", e.getMessage());
     }
   }
 
