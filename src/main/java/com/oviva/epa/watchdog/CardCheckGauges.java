@@ -53,7 +53,7 @@ class CardCheckGauges implements Iterable<MultiGauge.Row<?>> {
           .atError()
           .setCause(e)
           .log("failed to update cards of konnektor {}", config.konnektorUri());
-      return List.<MultiGauge.Row<?>>of().iterator();
+      return Collections.emptyIterator();
     }
   }
 
