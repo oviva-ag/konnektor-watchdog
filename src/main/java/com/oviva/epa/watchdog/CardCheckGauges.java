@@ -9,10 +9,8 @@ import com.oviva.epa.client.model.KonnektorException;
 import com.oviva.epa.client.model.PinStatus;
 import io.micrometer.core.instrument.MultiGauge;
 import io.micrometer.core.instrument.Tags;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Optional;
+import jakarta.ws.rs.ProcessingException;
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,21 +28,33 @@ class CardCheckGauges implements Iterable<MultiGauge.Row<?>> {
 
   @Override
   public Iterator<MultiGauge.Row<?>> iterator() {
-    logger.atDebug().log("connecting to {}", config.konnektorUri());
-    var conn = konnektorFactory.connect();
+    try {
+      logger.atDebug().log("connecting to {}", config.konnektorUri());
+      var conn = konnektorFactory.connect();
 
-    var konnektorService = buildService(config, conn);
+      var konnektorService = buildService(config, conn);
 
-    logger.atDebug().log("fetching cards from {}", config.konnektorUri());
-    var cards = konnektorService.getCardsInfo();
+      logger.atDebug().log("fetching cards from {}", config.konnektorUri());
+      var cards = konnektorService.getCardsInfo();
 
-    var l =
-        cards.stream()
-            .filter(c -> c.type() == Card.CardType.SMC_B)
-            .map(c -> checkCard(konnektorService, c))
-            // explicit .collect(...) to make Java generics work
-            .collect(ArrayList<MultiGauge.Row<?>>::new, ArrayList::add, ArrayList::addAll);
-    return l.iterator();
+      var l =
+          cards.stream()
+              .filter(c -> c.type() == Card.CardType.SMC_B)
+              .map(c -> checkCard(konnektorService, c))
+              // explicit .collect(...) to make Java generics work
+              .collect(ArrayList<MultiGauge.Row<?>>::new, ArrayList::add, ArrayList::addAll);
+
+      logger.atInfo().log(
+          "updated cards of konnektor {}, found {} cards", config.konnektorUri(), l.size());
+
+      return l.iterator();
+    } catch (KonnektorException | ProcessingException e) {
+      logger
+          .atError()
+          .setCause(e)
+          .log("failed to update cards of konnektor {}", config.konnektorUri());
+      return List.<MultiGauge.Row<?>>of().iterator();
+    }
   }
 
   private KonnektorService buildService(Main.KonnektorConfig cfg, KonnektorConnection conn) {
