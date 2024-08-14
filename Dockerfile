@@ -1,6 +1,6 @@
 FROM registry.access.redhat.com/ubi9/ubi-minimal:9.4
 
-LABEL org.opencontainers.image.source="https://github.com/oviva-ag/epa-fm-watchdog"
+LABEL org.opencontainers.image.source="https://github.com/oviva-ag/konnektor-watchdog"
 
 ARG JAVA_PACKAGE=java-21-openjdk-headless
 ARG RUN_JAVA_VERSION=1.3.8
@@ -45,13 +45,13 @@ ENV OTEL_INSTRUMENTATION_UNDERTOW_ENABLED=true
 COPY --chown=1001 target/lib /deployments/
 
 # application
-COPY --chown=1001 target/epa-fm-watchdog.jar /deployments/
+COPY --chown=1001 target/konnektor-watchdog.jar /deployments/
 
 WORKDIR /deployments
 
 # Configure the JAVA_OPTIONS, you can add -XshowSettings:vm to also display the heap size.
 ENV JAVA_OPTIONS="-javaagent:/opentelemetry-javaagent.jar"
-ENV JAVA_MAIN_CLASS=com.oviva.epa.watchdog.Main
+ENV JAVA_MAIN_CLASS=com.oviva.konnektor.watchdog.Main
 
 USER 1001
 

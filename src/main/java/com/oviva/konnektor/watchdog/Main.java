@@ -1,10 +1,10 @@
-package com.oviva.epa.watchdog;
+package com.oviva.konnektor.watchdog;
 
 import com.oviva.epa.client.konn.KonnektorConnectionFactory;
 import com.oviva.epa.client.konn.KonnektorConnectionFactoryBuilder;
-import com.oviva.epa.watchdog.cfg.ConfigProvider;
-import com.oviva.epa.watchdog.cfg.EnvConfigProvider;
-import com.oviva.epa.watchdog.handlers.MetricsHandler;
+import com.oviva.konnektor.watchdog.cfg.ConfigProvider;
+import com.oviva.konnektor.watchdog.cfg.EnvConfigProvider;
+import com.oviva.konnektor.watchdog.handlers.MetricsHandler;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.MultiGauge;
@@ -47,7 +47,7 @@ public class Main implements AutoCloseable {
 
   public static void main(String[] args) {
     logger.atDebug().log("initialising application");
-    try (var app = new Main(new EnvConfigProvider("EPA_FM_WATCHDOG", System::getenv))) {
+    try (var app = new Main(new EnvConfigProvider("KONNEKTOR_WATCHDOG", System::getenv))) {
       app.run();
       app.awaitTermination();
     } catch (Exception e) {

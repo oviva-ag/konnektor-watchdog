@@ -1,4 +1,4 @@
-package com.oviva.epa.watchdog;
+package com.oviva.konnektor.watchdog;
 
 import static org.junit.jupiter.api.Assertions.*;
 

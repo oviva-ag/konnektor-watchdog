@@ -1,4 +1,4 @@
-package com.oviva.epa.watchdog.cfg;
+package com.oviva.konnektor.watchdog.cfg;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

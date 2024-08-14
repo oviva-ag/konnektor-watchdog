@@ -1,4 +1,4 @@
-package com.oviva.epa.watchdog.logging;
+package com.oviva.konnektor.watchdog.logging;
 
 import ch.qos.logback.classic.pattern.ExtendedThrowableProxyConverter;
 import ch.qos.logback.classic.pattern.ThrowableHandlingConverter;

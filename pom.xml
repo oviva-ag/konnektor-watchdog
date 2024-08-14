@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.oviva.epa.watchdog</groupId>
-  <artifactId>epa-fm-watchdog</artifactId>
+  <groupId>com.oviva.konnektor.watchdog</groupId>
+  <artifactId>konnektor-watchdog</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
   <licenses>
@@ -16,8 +16,8 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:https://github.com/oviva-ag/epa-fm-watchdog.git</connection>
-    <url>https://github.com/oviva-ag/epa-fm-watchdog</url>
+    <connection>scm:git:https://github.com/oviva-ag/konnektor-watchdog.git</connection>
+    <url>https://github.com/oviva-ag/konnektor-watchdog</url>
   </scm>
 
   <properties>
@@ -45,7 +45,7 @@
     <sonar.organization>oviva-ag</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.projectName>${project.artifactId}</sonar.projectName>
-    <sonar.projectKey>oviva-ag_epa-fm-watchdog</sonar.projectKey>
+    <sonar.projectKey>oviva-ag_konnektor-watchdog</sonar.projectKey>
     <sonar.moduleKey>${project.groupId}_${project.artifactId}</sonar.moduleKey>
     <sonar.cpd.exclusions></sonar.cpd.exclusions>
     <sonar.coverage.exclusions></sonar.coverage.exclusions>
@@ -422,7 +422,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>com.oviva.epa.watchdog.Main</mainClass>
+              <mainClass>com.oviva.konnektor.watchdog.Main</mainClass>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
             </manifest>

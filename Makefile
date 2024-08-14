@@ -4,7 +4,7 @@ MVN=./mvnw
 VERSION?=$(shell $(MVN) -q -Dexec.executable=echo -Dexec.args='$${project.version}' --non-recursive exec:exec)
 
 DOCKER_REPO=ghcr.io/oviva-ag/
-IMAGE_NAME=epa-fm-watchdog
+IMAGE_NAME=konnektor-watchdog
 
 GIT_COMMIT=`git rev-parse HEAD`
 

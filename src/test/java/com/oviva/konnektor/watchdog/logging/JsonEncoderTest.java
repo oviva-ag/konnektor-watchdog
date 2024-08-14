@@ -1,4 +1,4 @@
-package com.oviva.epa.watchdog.logging;
+package com.oviva.konnektor.watchdog.logging;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

@@ -1,4 +1,4 @@
-package com.oviva.epa.watchdog.logging;
+package com.oviva.konnektor.watchdog.logging;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
@@ -35,7 +35,7 @@ public class LogConfigurator extends ContextAwareBase implements Configurator {
   }
 
   private Level getLevel() {
-    return Optional.ofNullable(System.getenv("EPA_FM_WATCHDOG_LOG_LEVEL"))
+    return Optional.ofNullable(System.getenv("KONNEKTOR_WATCHDOG_LOG_LEVEL"))
         .map(Level::valueOf)
         .orElse(Level.INFO);
   }

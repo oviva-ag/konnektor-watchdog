@@ -1,4 +1,4 @@
-package com.oviva.epa.watchdog;
+package com.oviva.konnektor.watchdog;
 
 import com.oviva.epa.client.KonnektorService;
 import com.oviva.epa.client.KonnektorServiceBuilder;
@@ -75,7 +75,7 @@ class CardCheckGauges implements Iterable<MultiGauge.Row<?>> {
   private String userAgent() {
     var agent =
         Optional.ofNullable(Main.class.getPackage().getImplementationTitle())
-            .orElse("epa-fm-watchdog")
+            .orElse("konnektor-watchdog")
             .toUpperCase(Locale.ROOT)
             .replaceAll("[^A-Z0-9]", "_");
 

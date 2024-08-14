@@ -1,4 +1,4 @@
-package com.oviva.epa.watchdog.cfg;
+package com.oviva.konnektor.watchdog.cfg;
 
 import java.util.Locale;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.oviva.epa.watchdog.handlers;
+package com.oviva.konnektor.watchdog.handlers;
 
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
