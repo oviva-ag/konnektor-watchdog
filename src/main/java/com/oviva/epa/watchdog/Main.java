@@ -23,6 +23,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -32,7 +35,9 @@ import org.slf4j.LoggerFactory;
 public class Main implements AutoCloseable {
 
   private static final Logger logger = LoggerFactory.getLogger(Main.class);
+  private static final int CARD_UPDATE_SCHEDULE_MINUTES = 10;
 
+  private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
   private final ConfigProvider configProvider;
   private Undertow server;
 
@@ -44,6 +49,7 @@ public class Main implements AutoCloseable {
     logger.atDebug().log("initialising application");
     try (var app = new Main(new EnvConfigProvider("EPA_FM_WATCHDOG", System::getenv))) {
       app.run();
+      app.awaitTermination();
     } catch (Exception e) {
       logger.atError().setCause(e).log("application crashed, cause: {}", e.getMessage());
     }
@@ -68,6 +74,14 @@ public class Main implements AutoCloseable {
     server.start();
 
     logger.atInfo().log("server ready at http://{}:{}/", host, port);
+  }
+
+  public void awaitTermination() {
+    try {
+      server.getWorker().awaitTermination();
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
   }
 
   private Undertow buildServer(String host, int port, HttpHandler metricsHandler) {
@@ -111,10 +125,25 @@ public class Main implements AutoCloseable {
             .description("the status of all plugged in cards")
             .register(registry);
 
+    updateCardCheckGauges(gauges, config, konnektorFactory);
+  }
+
+  private void updateCardCheckGauges(
+      MultiGauge gauges, KonnektorConfig config, KonnektorConnectionFactory konnektorFactory) {
+
+    var checker = new CardCheckGauges(config, konnektorFactory);
+    gauges.register(checker, true);
     logger.atInfo().log(
         "registered gauges for all cards in konnektor {}", config.konnektorUri().toString());
 
-    gauges.register(new CardCheckGauges(config, konnektorFactory), true);
+    scheduler.scheduleAtFixedRate(
+        () -> {
+          logger.atDebug().log("updating card gauges");
+          gauges.register(checker, true);
+        },
+        CARD_UPDATE_SCHEDULE_MINUTES,
+        CARD_UPDATE_SCHEDULE_MINUTES,
+        TimeUnit.MINUTES);
   }
 
   @Override
@@ -122,6 +151,7 @@ public class Main implements AutoCloseable {
     if (server != null) {
       server.stop();
     }
+    scheduler.shutdownNow();
   }
 
   record KonnektorConfig(

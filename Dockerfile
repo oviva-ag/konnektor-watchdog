@@ -26,8 +26,6 @@ echo "securerandom.source=file:/dev/urandom" >> /etc/alternatives/jre/conf/secur
 echo "securerandom.strongAlgorithms=NativePRNGNonBlocking:SUN,DRBG:SUN" >> /etc/alternatives/jre/conf/security/java.security
 EOF
 
-# Configure the JAVA_OPTIONS, you can add -XshowSettings:vm to also display the heap size.
-ENV JAVA_OPTIONS="-javaagent:/opentelemetry-javaagent.jar"
 
 # Configure OpenTelemetry
 ENV OTEL_JAVAAGENT_DEBUG=false
@@ -43,7 +41,17 @@ ENV OTEL_INSTRUMENTATION_JAVA_HTTP_CLIENT_ENABLED=true
 ENV OTEL_INSTRUMENTATION_JAXRS_ENABLED=false
 ENV OTEL_INSTRUMENTATION_UNDERTOW_ENABLED=true
 
-COPY --chown=1001 target/epa-fm-watchdog-jar-with-dependencies.jar /deployments/
+# Java dependencies
+COPY --chown=1001 target/lib /deployments/
+
+# application
+COPY --chown=1001 target/epa-fm-watchdog.jar /deployments/
+
+WORKDIR /deployments
+
+# Configure the JAVA_OPTIONS, you can add -XshowSettings:vm to also display the heap size.
+ENV JAVA_OPTIONS="-javaagent:/opentelemetry-javaagent.jar"
+ENV JAVA_MAIN_CLASS=com.oviva.epa.watchdog.Main
 
 USER 1001
 
