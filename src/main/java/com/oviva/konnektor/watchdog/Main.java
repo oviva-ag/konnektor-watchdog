@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class Main implements AutoCloseable {
 
   private static final Logger logger = LoggerFactory.getLogger(Main.class);
-  private static final int CARD_UPDATE_SCHEDULE_MINUTES = 10;
+  private static final int CARD_UPDATE_SCHEDULE_MINUTES = 3;
 
   private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
   private final ConfigProvider configProvider;
@@ -131,15 +131,23 @@ public class Main implements AutoCloseable {
   private void updateCardCheckGauges(
       MultiGauge gauges, KonnektorConfig config, KonnektorConnectionFactory konnektorFactory) {
 
+    var konnektorUri = config.konnektorUri().toString();
+
     var checker = new CardCheckGauges(config, konnektorFactory);
     gauges.register(checker, true);
-    logger.atInfo().log(
-        "registered gauges for all cards in konnektor {}", config.konnektorUri().toString());
+    logger
+        .atInfo()
+        .addKeyValue("konnektor", konnektorUri)
+        .log("registered gauges for all cards in konnektor {}", konnektorUri);
 
     scheduler.scheduleAtFixedRate(
         () -> {
-          logger.atDebug().log("updating card gauges");
-          gauges.register(checker, true);
+          logger
+              .atInfo()
+              .addKeyValue("konnektor", konnektorUri)
+              .log("updating card gauges for konnektor {}", konnektorUri);
+          var updated = new CardCheckGauges(config, konnektorFactory);
+          gauges.register(updated, true);
         },
         CARD_UPDATE_SCHEDULE_MINUTES,
         CARD_UPDATE_SCHEDULE_MINUTES,
