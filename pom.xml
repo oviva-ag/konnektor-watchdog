@@ -33,9 +33,9 @@
     <version.jboss-logging>3.6.1.Final</version.jboss-logging>
     <version.slf4j>2.0.17</version.slf4j>
 
-    <version.micrometer>1.14.4</version.micrometer>
+    <version.micrometer>1.14.5</version.micrometer>
 
-    <version.logback.classic>1.5.17</version.logback.classic>
+    <version.logback.classic>1.5.18</version.logback.classic>
 
     <spotless-maven-plugin.version>2.44.3</spotless-maven-plugin.version>
     <jacoco.version>0.8.12</jacoco.version>
@@ -57,7 +57,7 @@
       <dependency>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-annotations</artifactId>
-        <version>4.9.1</version>
+        <version>4.9.3</version>
         <exclusions>
           <exclusion>
             <groupId>com.google.code.findbugs</groupId>
@@ -92,7 +92,7 @@
       <dependency>
         <groupId>io.opentelemetry</groupId>
         <artifactId>opentelemetry-bom</artifactId>
-        <version>1.47.0</version>
+        <version>1.48.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -161,7 +161,7 @@
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-bom</artifactId>
-        <version>4.1.0</version>
+        <version>4.1.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -170,14 +170,14 @@
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.12.0</version>
+        <version>5.12.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-bom</artifactId>
-        <version>5.15.2</version>
+        <version>5.16.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -259,12 +259,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.5.2</version>
+          <version>3.5.3</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>3.5.2</version>
+          <version>3.5.3</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -350,7 +350,7 @@
           <dependency>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>extra-enforcer-rules</artifactId>
-            <version>1.9.0</version>
+            <version>1.10.0</version>
           </dependency>
         </dependencies>
         <executions>
