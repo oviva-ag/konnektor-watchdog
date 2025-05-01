@@ -139,7 +139,7 @@
         <!-- https://issues.apache.org/jira/browse/CXF-8671 -->
         <groupId>jakarta.platform</groupId>
         <artifactId>jakarta.jakartaee-bom</artifactId>
-        <version>9.1.0</version>
+        <version>11.0.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
