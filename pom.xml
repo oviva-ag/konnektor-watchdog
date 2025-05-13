@@ -119,9 +119,9 @@
         <version>${version.logback.classic}</version>
       </dependency>
       <dependency>
-        <groupId>com.oviva.epa</groupId>
-        <artifactId>diga-epa-client</artifactId>
-        <version>1.0.1-rc.0</version>
+        <groupId>com.oviva.telematik</groupId>
+        <artifactId>konnektor-client</artifactId>
+        <version>0.0.7</version>
       </dependency>
       <dependency>
         <groupId>com.google.auto.service</groupId>
@@ -207,8 +207,8 @@
       <artifactId>micrometer-registry-prometheus</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.oviva.epa</groupId>
-      <artifactId>diga-epa-client</artifactId>
+      <groupId>com.oviva.telematik</groupId>
+      <artifactId>konnektor-client</artifactId>
     </dependency>
     <dependency>
       <groupId>com.google.auto.service</groupId>
