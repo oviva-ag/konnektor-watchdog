@@ -33,12 +33,12 @@
     <version.jboss-logging>3.6.1.Final</version.jboss-logging>
     <version.slf4j>2.0.17</version.slf4j>
 
-    <version.micrometer>1.14.5</version.micrometer>
+    <version.micrometer>1.14.6</version.micrometer>
 
     <version.logback.classic>1.5.18</version.logback.classic>
 
-    <spotless-maven-plugin.version>2.44.3</spotless-maven-plugin.version>
-    <jacoco.version>0.8.12</jacoco.version>
+    <spotless-maven-plugin.version>2.44.4</spotless-maven-plugin.version>
+    <jacoco.version>0.8.13</jacoco.version>
 
     <maven-shade.version>3.6.0</maven-shade.version>
 
@@ -92,7 +92,7 @@
       <dependency>
         <groupId>io.opentelemetry</groupId>
         <artifactId>opentelemetry-bom</artifactId>
-        <version>1.48.0</version>
+        <version>1.49.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -109,7 +109,7 @@
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
-        <version>2.18.3</version>
+        <version>2.19.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -170,14 +170,14 @@
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.12.1</version>
+        <version>5.12.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-bom</artifactId>
-        <version>5.16.1</version>
+        <version>5.17.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
