@@ -4,9 +4,8 @@ import com.oviva.epa.client.KonnektorService;
 import com.oviva.epa.client.KonnektorServiceBuilder;
 import com.oviva.epa.client.konn.KonnektorConnection;
 import com.oviva.epa.client.konn.KonnektorConnectionFactory;
-import com.oviva.epa.client.model.Card;
 import com.oviva.epa.client.model.KonnektorException;
-import com.oviva.epa.client.model.PinStatus;
+import com.oviva.epa.client.model.SmcbCard;
 import io.micrometer.core.instrument.MultiGauge;
 import io.micrometer.core.instrument.Tags;
 import jakarta.ws.rs.ProcessingException;
@@ -35,12 +34,11 @@ class CardCheckGauges implements Iterable<MultiGauge.Row<?>> {
       var konnektorService = buildService(config, conn);
 
       logger.atDebug().log("fetching cards from {}", config.konnektorUri());
-      var cards = konnektorService.getCardsInfo();
+      var cards = konnektorService.listSmcbCards();
 
       var l =
           cards.stream()
-              .filter(c -> c.type() == Card.CardType.SMC_B)
-              .map(c -> checkCard(konnektorService, c))
+              .map(this::checkCard)
               // explicit .collect(...) to make Java generics work
               .collect(ArrayList<MultiGauge.Row<?>>::new, ArrayList::add, ArrayList::addAll);
 
@@ -68,7 +66,6 @@ class CardCheckGauges implements Iterable<MultiGauge.Row<?>> {
         .clientSystemId(cfg.clientSystemId())
         .mandantId(cfg.mandantId())
         .userId(cfg.userId())
-        .userAgent(userAgent)
         .build();
   }
 
@@ -84,16 +81,15 @@ class CardCheckGauges implements Iterable<MultiGauge.Row<?>> {
     return "%s/%s".formatted(agent, version);
   }
 
-  private MultiGauge.Row<Card> checkCard(KonnektorService service, Card card) {
+  private MultiGauge.Row<SmcbCard> checkCard(SmcbCard card) {
     var tags = Tags.of("holder", card.holderName(), "card_handle", card.handle());
     try {
       return MultiGauge.Row.of(
           tags,
           card,
-          (Card c) -> {
+          (SmcbCard c) -> {
             try {
-              var status = service.verifySmcPin(card.handle());
-              if (status == PinStatus.VERIFIED) {
+              if (card.pinVerified()) {
                 return 1.0;
               }
               return 0.0;
@@ -102,7 +98,7 @@ class CardCheckGauges implements Iterable<MultiGauge.Row<?>> {
             }
           });
     } catch (Exception e) {
-      return MultiGauge.Row.of(tags, (Card) null, s -> 0.0);
+      return MultiGauge.Row.of(tags, null, s -> 0.0);
     }
   }
 }
