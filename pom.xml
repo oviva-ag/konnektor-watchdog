@@ -33,9 +33,9 @@
     <version.jboss-logging>3.6.1.Final</version.jboss-logging>
     <version.slf4j>2.0.17</version.slf4j>
 
-    <version.micrometer>1.16.0</version.micrometer>
+    <version.micrometer>1.16.1</version.micrometer>
 
-    <version.logback.classic>1.5.21</version.logback.classic>
+    <version.logback.classic>1.5.23</version.logback.classic>
 
     <spotless-maven-plugin.version>2.44.3</spotless-maven-plugin.version>
     <jacoco.version>0.8.14</jacoco.version>
@@ -92,7 +92,7 @@
       <dependency>
         <groupId>io.opentelemetry</groupId>
         <artifactId>opentelemetry-bom</artifactId>
-        <version>1.56.0</version>
+        <version>1.57.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -121,7 +121,7 @@
       <dependency>
         <groupId>com.oviva.telematik</groupId>
         <artifactId>konnektor-client</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.1</version>
       </dependency>
       <dependency>
         <groupId>com.google.auto.service</groupId>
@@ -176,7 +176,7 @@
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-bom</artifactId>
-        <version>5.20.0</version>
+        <version>5.21.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
