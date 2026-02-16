@@ -29,7 +29,7 @@ class MainTest {
   private final Pattern cardStatusPattern =
       Pattern.compile(
           """
-            card_status\\{card_handle="[a-f0-9-]+",holder="[^"]+",konnektor="https://10.156.145.103:443"} ([.0-9]+)""");
+            card_status\\{card_handle="[a-f0-9-]+",holder="[^"]+",telematik_id="[^"]+",konnektor="https://10.156.145.103:443"} ([.0-9]+)""");
 
   private final Pattern konnektorStatusUpPattern =
       Pattern.compile(
