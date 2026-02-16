@@ -82,7 +82,14 @@ class CardCheckGauges implements Iterable<MultiGauge.Row<?>> {
   }
 
   private MultiGauge.Row<SmcbCard> checkCard(SmcbCard card) {
-    var tags = Tags.of("holder", card.holderName(), "card_handle", card.handle());
+    var tags =
+        Tags.of(
+            "holder",
+            card.holderName(),
+            "card_handle",
+            card.handle(),
+            "telematik_id",
+            card.telematikId());
     try {
       return MultiGauge.Row.of(
           tags,
