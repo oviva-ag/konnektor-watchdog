@@ -1,6 +1,6 @@
 MVN=./mvnw
 
-VERSION?=$(shell $(MVN) -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+VERSION?=$(shell $(MVN) -q -Dexec.executable=echo -Dexec.args='$${project.version}' --non-recursive exec:exec)
 
 DOCKER_REPO=europe-docker.pkg.dev/oviva-pkg/ovi/
 IMAGE_NAME=konnektor-watchdog
